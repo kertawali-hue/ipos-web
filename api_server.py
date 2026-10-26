@@ -5,12 +5,13 @@ from flask import Flask, jsonify, request, render_template, send_from_directory
 import psycopg2
 from psycopg2.extras import RealDictCursor
 
-app = Flask(__name__)
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+app = Flask(__name__, template_folder=os.path.join(BASE_DIR, "templates"), static_folder=os.path.join(BASE_DIR, "static"))
 app.config['TEMPLATES_AUTO_RELOAD'] = True
 app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 0
 
 # Database Configuration for iPos 4
-DATABASE_URL = os.environ.get("DATABASE_URL")
+DATABASE_URL = os.environ.get("DATABASE_URL", "postgresql://postgres:lIsnIiPzPBbcY1WK@db.zbwaogqsukasjqosuepf.supabase.co:5432/postgres")
 DB_HOST = os.environ.get("DB_HOST", "127.0.0.1")
 DB_PORT = int(os.environ.get("DB_PORT", 5444))
 DB_DATABASE = os.environ.get("DB_DATABASE", "i4_xaptk")
