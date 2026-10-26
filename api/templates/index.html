@@ -1229,7 +1229,7 @@
                 color: tickColor,
                 font: { size: 9 },
                 callback: function(value) {
-                  return 'Rp ' + (value / 1000000).toFixed(1) + 'Jt';
+                  const valJt = value / 1000000; return 'Rp ' + (valJt % 1 === 0 ? valJt : valJt.toFixed(1)) + ' jt';
                 }
               }
             }

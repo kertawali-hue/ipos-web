@@ -788,7 +788,7 @@
           <span>bca</span>
         </button>
       </div>
-      <h1 id="header-title" style="flex: 1; text-align: center; font-size: 14px; margin: 0 4px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; color: var(--text-main);">Omset v:1.0.3</h1>
+      <h1 id="header-title" style="flex: 1; text-align: center; font-size: 14px; margin: 0 4px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; color: var(--text-main);">Omset v:1.0.4</h1>
       <button class="btn-refresh" onclick="refreshCurrentTab()" title="Refresh Data">🔄</button>
     </header>
 
@@ -1071,7 +1071,7 @@
       if (tab === 'omset') {
         document.getElementById('tab-omset').classList.add('active');
         document.getElementById('nav-omset').classList.add('active');
-        document.getElementById('header-title').innerText = 'Omset v:1.0.3';
+        document.getElementById('header-title').innerText = 'Omset v:1.0.4';
         loadOmsetData();
       } else if (tab === 'setoran') {
         document.getElementById('tab-setoran').classList.add('active');
@@ -1229,7 +1229,7 @@
                 color: tickColor,
                 font: { size: 9 },
                 callback: function(value) {
-                  return 'Rp ' + (value / 1000000).toFixed(1) + 'Jt';
+                  const valJt = value / 1000000; return 'Rp ' + (valJt % 1 === 0 ? valJt : valJt.toFixed(1)) + ' jt';
                 }
               }
             }
