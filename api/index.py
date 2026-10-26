@@ -18,16 +18,29 @@ DB_DATABASE = os.environ.get("DB_DATABASE", "i4_xaptk")
 DB_USERNAME = os.environ.get("DB_USERNAME", "admin")
 DB_PASSWORD = os.environ.get("DB_PASSWORD", "2356988")
 
+# Timezone Configuration (WIB / GMT+7)
+WIB = datetime.timezone(datetime.timedelta(hours=7))
+
+def get_wib_now():
+    return datetime.datetime.now(WIB)
+
+def get_wib_today_str():
+    return get_wib_now().strftime("%Y-%m-%d")
+
 def get_db_connection():
     if DATABASE_URL:
-        return psycopg2.connect(DATABASE_URL)
-    return psycopg2.connect(
-        host=DB_HOST,
-        port=DB_PORT,
-        dbname=DB_DATABASE,
-        user=DB_USERNAME,
-        password=DB_PASSWORD
-    )
+        conn = psycopg2.connect(DATABASE_URL)
+    else:
+        conn = psycopg2.connect(
+            host=DB_HOST,
+            port=DB_PORT,
+            dbname=DB_DATABASE,
+            user=DB_USERNAME,
+            password=DB_PASSWORD
+        )
+    with conn.cursor() as cur:
+        cur.execute("SET timezone = 'Asia/Jakarta';")
+    return conn
 
 def determine_cara_bayar(row):
     if row.get("carabayar") and str(row["carabayar"]).strip():
@@ -141,7 +154,7 @@ def get_setoran_kasir():
     try:
         target_date = request.args.get("tanggal")
         if not target_date:
-            target_date = datetime.date.today().isoformat()
+            target_date = get_wib_today_str()
         
         target_user = request.args.get("user")
 
@@ -155,7 +168,7 @@ def get_setoran_kasir():
         except:
             tgl_formatted = target_date
 
-        jam_cetak = datetime.datetime.now().strftime("%d/%m/%y %H:%M")
+        jam_cetak = get_wib_now().strftime("%d/%m/%y %H:%M")
 
         if target_user and target_user.upper() not in ["SEMUA", "ALL", ""]:
             query = """
@@ -327,7 +340,7 @@ def get_rekap_kasir():
     try:
         target_date = request.args.get("tanggal")
         if not target_date:
-            target_date = datetime.date.today().isoformat()
+            target_date = get_wib_today_str()
 
         conn = get_db_connection()
         cur = conn.cursor(cursor_factory=RealDictCursor)
@@ -721,7 +734,7 @@ def get_omset():
         cur.close()
         conn.close()
 
-        now = datetime.datetime.now()
+        now = get_wib_now()
         months_id = ["", "Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "November", "Desember"]
         bulan_nama = months_id[now.month]
         bulan_display = f"{bulan_nama} {now.year}"
