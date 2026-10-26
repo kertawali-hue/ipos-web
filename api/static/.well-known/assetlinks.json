@@ -1,0 +1,8 @@
+[{
+      "relation": ["delegate_permission/common.handle_all_urls"],
+      "target": {
+        "namespace": "android_app",
+        "package_name": "com.ipos4.boscekomset",
+        "sha256_cert_fingerprints": ["B6:A1:3F:60:95:98:82:40:D6:1A:F7:D9:5C:14:86:A8:8C:1E:A6:D8:72:E5:F4:27:BF:95:10:D7:1A:C1:A3:F8"]
+      }
+    }]
