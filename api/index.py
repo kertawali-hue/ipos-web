@@ -11,7 +11,7 @@ app.config['TEMPLATES_AUTO_RELOAD'] = True
 app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 0
 
 # Database Configuration for iPos 4
-DATABASE_URL = os.environ.get("DATABASE_URL", "postgresql://postgres:lIsnIiPzPBbcY1WK@db.zbwaogqsukasjqosuepf.supabase.co:5432/postgres")
+DATABASE_URL = os.environ.get("DATABASE_URL", "postgresql://postgres.zbwaogqsukasjqosuepf:lIsnIiPzPBbcY1WK@aws-0-ap-northeast-1.pooler.supabase.com:5432/postgres")
 DB_HOST = os.environ.get("DB_HOST", "127.0.0.1")
 DB_PORT = int(os.environ.get("DB_PORT", 5444))
 DB_DATABASE = os.environ.get("DB_DATABASE", "i4_xaptk")
