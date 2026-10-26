@@ -6,6 +6,12 @@
       "use": "@vercel/python"
     }
   ],
+  "crons": [
+    {
+      "path": "/api/ping",
+      "schedule": "0 1 * * *"
+    }
+  ],
   "routes": [
     {
       "src": "/(.*)",

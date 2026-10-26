@@ -97,6 +97,26 @@ def serve_assetlinks():
             return app.response_class(f.read(), mimetype="application/json")
     return app.response_class(ASSETLINKS_CONTENT, mimetype="application/json")
 
+@app.route("/api/ping", methods=["GET"])
+def ping_keepalive():
+    try:
+        conn = get_db_connection()
+        cur = conn.cursor()
+        cur.execute("SELECT 1;")
+        cur.fetchone()
+        cur.close()
+        conn.close()
+        return jsonify({
+            "status": "ok",
+            "message": "Supabase keep-alive success",
+            "timestamp": get_wib_now().isoformat()
+        })
+    except Exception as e:
+        return jsonify({
+            "status": "error",
+            "error": str(e)
+        }), 500
+
 @app.route("/download-apk")
 @app.route("/Bos-Cek-Omset.apk")
 @app.route("/Dashboard-Owner.apk")
